@@ -17,9 +17,9 @@ val initialize : unit -> unit Lwt.t
 
 (** {1 Interface to Mirage Entropy} *)
 
-val sources : unit -> Entropy_xen.source list option
+val sources : unit -> Entropy_solo5.source list option
 (** {!Entropy_xen.source}s set up with the last {{!initialize}initialize}. *)
 
-val attach : Entropy_xen.t -> Nocrypto.Rng.g -> Entropy_xen.token Lwt.t
+val attach : Entropy_solo5.t -> Nocrypto.Rng.g -> Entropy_solo5.token Lwt.t
 (** [attach e g] starts seeding [g] from the entropy provider [e] and returns
     the token to stop the seeding. *)

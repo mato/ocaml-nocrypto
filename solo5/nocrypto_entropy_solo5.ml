@@ -3,7 +3,7 @@ open Lwt
 open Nocrypto
 open Uncommon
 
-module E = Entropy_xen
+module E = Entropy_solo5
 
 type t = { e : E.t ; token : E.token ; g : Rng.g }
 
@@ -24,4 +24,4 @@ let initialize () =
     | None                 -> E.connect () >>= reg
 
 let sources () =
-  Option.map ~f:(fun { e; _ } -> Entropy_xen.sources e) !active
+  Option.map ~f:(fun { e; _ } -> Entropy_solo5.sources e) !active
