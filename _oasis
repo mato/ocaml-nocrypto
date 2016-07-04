@@ -76,6 +76,7 @@ Library nocrypto
   BuildDepends:    cstruct (>= 1.6.0), zarith, sexplib, ppx_sexp_conv
   XMETARequires:   cstruct, zarith, sexplib
   XMETAExtraLines: xen_linkopts = "-lnocrypto_xen_stubs"
+  XMETAExtraLines+:freestanding_linkopts = "-lnocrypto_solo5_stubs"
   ByteOpt:         -w A-4-29-33-40-41-42-43-34-44
   CCOpt:           --std=c99 -Wall -Wextra -Werror -O3
   if flag(modernity) && architecture(amd64)
