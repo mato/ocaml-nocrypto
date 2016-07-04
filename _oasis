@@ -19,6 +19,10 @@ Flag xen
   Description: Build Xen support
   Default:     false
 
+Flag solo5
+  Description: Build Solo5 support
+  Default:     false
+
 Flag lwt
   Description: Build Lwt/Unix support
   Default:     true
@@ -118,6 +122,34 @@ Library nocrypto_xen
   BuildDepends:    nocrypto, mirage-entropy-xen
   XMETARequires:   nocrypto, lwt, mirage-entropy-xen
   CCOpt:           --std=c99 -Wall -Wextra -Werror -O3 -DNDEBUG $XEN_CFLAGS
+  if flag(modernity) && architecture(amd64)
+    CCOpt+: -DACCELERATE -msse2 -maes
+
+Library nocrypto_solo5
+  Path:            solo5/
+  Findlibparent:   nocrypto
+  Findlibname:     solo5
+  Build$:          flag(solo5)
+  Modules:         Nocrypto_entropy_solo5
+  CSources:        native/nocrypto.h,
+                   native/misc.c,
+                   native/hash/stubs.c,
+                   native/hash/bitfn.h,
+                   native/hash/md5.c,
+                   native/hash/md5.h,
+                   native/hash/sha1.c,
+                   native/hash/sha1.h,
+                   native/hash/sha256.c,
+                   native/hash/sha256.h,
+                   native/hash/sha512.c,
+                   native/hash/sha512.h,
+                   native/aes/generic.c,
+                   native/aes/aesni.c,
+                   native/des/generic.c,
+                   native/des/generic.h
+  BuildDepends:    nocrypto, mirage-entropy-solo5
+  XMETARequires:   nocrypto, lwt, mirage-entropy-solo5
+  CCOpt:           --std=c99 -Wall -Wextra -Werror -O3 -DNDEBUG $FREESTANDING_CFLAGS
   if flag(modernity) && architecture(amd64)
     CCOpt+: -DACCELERATE -msse2 -maes
 
